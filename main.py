@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from xml.etree import ElementTree as ET
 import geopandas as gpd
 import shapely.geometry
-from tqdm import tqdm
 import numpy as np
 import requests
 import json
@@ -82,7 +81,7 @@ async def partition(feature_id: int, zoom: int):
     _, xmax, ymax = epsg3857xyzoom_to_tileid(boundary_xmax, boundary_ymin, z)
 
     polygonids = []
-    for x in tqdm(range(xmin, xmax + 1), total=xmax - xmin + 1):
+    for x in range(xmin, xmax + 1):
         for y in range(ymin, ymax + 1):
             if df.geometry.intersects(get_tile_corners(z, x, y)).any():
                 polygonids.append([z, x, y])
