@@ -86,8 +86,4 @@ async def partition(feature_id: int, zoom: int):
             if df.geometry.intersects(get_tile_corners(z, x, y)).any():
                 polygonids.append([z, x, y])
 
-    return {
-        "polygonids": ", ".join(
-            ["/".join([str(e) for e in each]) for each in polygonids]
-        )
-    }
+    return {"polygonids": ["/".join([str(e) for e in each]) for each in polygonids]}
