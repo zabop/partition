@@ -83,6 +83,9 @@ async def partition(feature_id: int, zoom: int):
     _, xmin, ymin = epsg3857xyzoom_to_tileid(boundary_xmin, boundary_ymax, z)
     _, xmax, ymax = epsg3857xyzoom_to_tileid(boundary_xmax, boundary_ymin, z)
 
+    if (xmax - xmin) * (ymax - ymin) > 10000:
+        return {"resp": ["Zoom level too high for the given polygon."]}
+
     polygonids = []
     for x in range(xmin, xmax + 1):
         for y in range(ymin, ymax + 1):
