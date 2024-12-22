@@ -23,6 +23,10 @@
           transform: rotate(360deg);
         }
       }
+
+      #polygon-ids {
+        margin-top: 20px;
+      }
     </style>
   </head>
   <body>
@@ -52,9 +56,12 @@
 
     <div id="spinner"></div>
 
+    <div id="polygon-ids"></div>
+
     <script>
       const form = document.getElementById("osm-form");
       const spinner = document.getElementById("spinner");
+      const polygonIdsDiv = document.getElementById("polygon-ids");
 
       form.addEventListener("submit", function (event) {
         event.preventDefault();
@@ -65,7 +72,28 @@
 
         const url = `https://partition.fly.dev/?feature_id=${featureId}&zoom=${zoomLevel}`;
 
-        window.location.href = url;
+        fetch(url)
+          .then((response) => response.json())
+          .then((data) => {
+            spinner.style.display = "none";
+
+            if (data.polygonids && Array.isArray(data.polygonids)) {
+              polygonIdsDiv.innerHTML =
+                "<h3>Intersecting Polygon IDs:</h3><ul>";
+              data.polygonids.forEach((id) => {
+                polygonIdsDiv.innerHTML += `<li>${id}</li>`;
+              });
+              polygonIdsDiv.innerHTML += "</ul>";
+            } else {
+              polygonIdsDiv.innerHTML = "<p>No polygon IDs found.</p>";
+            }
+          })
+          .catch((error) => {
+            spinner.style.display = "none";
+            polygonIdsDiv.innerHTML =
+              "<p>Error fetching data. Please try again later.</p>";
+            console.error("Error:", error);
+          });
       });
     </script>
   </body>
