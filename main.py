@@ -9,7 +9,10 @@ import json
 
 app = FastAPI()
 
-origins = ["https://zabop.github.io", "*"]  # local dev
+origins = [
+    "https://zabop.github.io",
+    # "*" # local dev
+]
 
 app.add_middleware(
     CORSMiddleware,
