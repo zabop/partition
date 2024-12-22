@@ -67,6 +67,9 @@ async def partition(feature_id: int, zoom: int):
     get_border(feature_id)
     z = zoom
 
+    if z < 0 or z > 18:
+        return {"resp": ["Zoom level should be between 0 and 14."]}
+
     df = gpd.read_file("/tmp/borders.geojson").to_crs(3857)
     bounds = df.geometry.bounds
 
@@ -86,4 +89,4 @@ async def partition(feature_id: int, zoom: int):
             if df.geometry.intersects(get_tile_corners(z, x, y)).any():
                 polygonids.append([z, x, y])
 
-    return {"polygonids": ["/".join([str(e) for e in each]) for each in polygonids]}
+    return {"resp": ["/".join([str(e) for e in each]) for each in polygonids]}

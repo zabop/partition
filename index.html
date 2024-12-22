@@ -84,10 +84,10 @@
           .then((data) => {
             spinner.style.display = "none";
 
-            if (data.polygonids && Array.isArray(data.polygonids)) {
+            if (data.resp && Array.isArray(data.resp)) {
               polygonIdsDiv.innerHTML =
                 "<h3>Intersecting Polygon IDs:</h3><ul>";
-              data.polygonids.forEach((id) => {
+              data.resp.forEach((id) => {
                 polygonIdsDiv.innerHTML += `<li>${id}</li>`;
               });
               polygonIdsDiv.innerHTML += "</ul>";
