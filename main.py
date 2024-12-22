@@ -67,7 +67,7 @@ async def partition(feature_id: int, zoom: int):
     get_border(350377)
     z = 14
 
-    df = gpd.read_file("borders.geojson").to_crs(3857)
+    df = gpd.read_file("/tmp/borders.geojson").to_crs(3857)
     bounds = df.geometry.bounds
 
     boundary_xmin, boundary_ymin, boundary_xmax, boundary_ymax = (
