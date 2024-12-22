@@ -64,8 +64,8 @@ def get_border(osm_id):
 @app.get("/")
 async def partition(feature_id: int, zoom: int):
 
-    get_border(350377)
-    z = 14
+    get_border(feature_id)
+    z = zoom
 
     df = gpd.read_file("/tmp/borders.geojson").to_crs(3857)
     bounds = df.geometry.bounds
