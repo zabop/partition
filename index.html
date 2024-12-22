@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OSM Feature and Zoom Level</title>
     <style>
-      /* Spinner Styles */
       #spinner {
         display: none;
         width: 50px;
@@ -32,7 +31,7 @@
       tiles
     </h1>
 
-    <form action="/process" method="post" id="osm-form">
+    <form id="osm-form">
       <label for="feature-id">OSM Feature ID:</label>
       <input type="text" id="feature-id" name="feature-id" required />
       <br /><br />
@@ -58,7 +57,15 @@
       const spinner = document.getElementById("spinner");
 
       form.addEventListener("submit", function (event) {
-        spinner.style.display = "block"; // Show spinner
+        event.preventDefault();
+        spinner.style.display = "block";
+
+        const featureId = document.getElementById("feature-id").value;
+        const zoomLevel = document.getElementById("zoom-level").value;
+
+        const url = `https://partition.fly.dev/?feature_id=${featureId}&zoom=${zoomLevel}`;
+
+        window.location.href = url;
       });
     </script>
   </body>
